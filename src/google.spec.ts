@@ -1,6 +1,7 @@
 import { launch, Browser, Page } from 'puppeteer';
+import { isSameDay } from 'date-fns';
 
-xdescribe('Google 首頁進行搜尋 horse', () => {
+describe('Google 首頁進行搜尋 horse', () => {
   let browser: Browser;
   let page: Page;
 
@@ -16,12 +17,11 @@ xdescribe('Google 首頁進行搜尋 horse', () => {
 
   afterAll(async () => {
     await page.waitFor(2000);
-
     await browser.close();
   });
 
   test('搜尋欄位輸入 "horse"，然後測試有沒有成功輸入', async () => {
-    const input = await page.$('#tsf > div:nth-child(2) > div.A8SBwf > div.RNNXgb > div > div.a4bIc > input');
+    const input = await page.$('input');
     await input?.type('horse');
 
     const inputValue = await page.evaluate((el: HTMLInputElement) => el.value, input);
